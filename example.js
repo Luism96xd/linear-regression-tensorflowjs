@@ -9,6 +9,7 @@ var dimensiones = [];
 var model;
 var prediccion;
 const alerts = document.getElementById('alerts');
+const sampleButton = document.getElementById('sample');
 
 function readFile(evt) {
     let file = evt.target.files[0];
@@ -48,20 +49,6 @@ function readFile(evt) {
     flash('Data uploaded successfully', 'success')
     return output;
   }
-  function flash(message, category){
-    if (category == "success" && category != null){
-      color = '#9BFF96';
-    }else{
-      color = '#ff969b';
-    }
-    const div = document.createElement('div');
-    div.style.backgroundColor = color;
-    div.classList.add('alert');
-    div.innerText = message;
-    div.innerHTML += `  <span class="closebtn" onclick="this.parentElement.style.display='none'; opacity: 0;">&times;</span>`;
-    alerts.appendChild(div);
-    setTimeout(function(){ alerts.removeChild(div); }, 2000);
-  }
 
   function displayHTMLTable(results) {
     var table = "<table class='table'>";
@@ -84,10 +71,6 @@ function readFile(evt) {
     tabla.innerHTML = table;
     container.appendChild(tabla);
 
-    /*Aquí les dejo las variables "entradas" y "salidas"
-    Ahora tienen que convertirlas en los tensores Xs y Ys
-    Sigan el tutorial paso a paso
-    */
     for (i = 1; i < row.length; i++){
       entradas.push(Number.parseInt(output[0][i]));
       salidas.push(Number.parseInt(output[1][i]));
@@ -100,12 +83,18 @@ function readFile(evt) {
     console.log(salidas, typeof(salidas));
     console.log("X:"+ entradas + "\t Length: "+ dimensiones);
     console.log("Y:"+ salidas + "\t Length: "+ dimensiones);
-    console.log(typeof(entradas[0]))
 }
 
 document.getElementById('files').addEventListener('change', readFile, false);
 
 button.addEventListener('click', learnLinear);
+
+sampleButton.addEventListener('click', function(){
+  entradas = [-1, 0, 1, 2, 3, 4, 5];
+  salidas = [-3, -1, 1, 3, 5, 7, 8];
+  dimensiones = [entradas.length, 1]
+  getData(entradas);
+});
 
 predecir_btn.addEventListener('click', function(){
   if((input_predict.value != "" && model != undefined)){
@@ -115,6 +104,21 @@ predecir_btn.addEventListener('click', function(){
     flash('Model has not been created yet','error');
   }
 });
+function flash(message, category){
+  if (category == "success" && category != null){
+    color = '#9BFF96';
+  }else{
+    color = '#ff969b';
+  }
+  const div = document.createElement('div');
+  div.style.backgroundColor = color;
+  div.classList.add('alert');
+  div.innerText = message;
+  div.innerHTML += `  <span class="closebtn" onclick="this.parentElement.style.display='none'; opacity: 0;">&times;</span>`;
+  alerts.appendChild(div);
+  setTimeout(function(){ alerts.removeChild(div); }, 2000);
+}
+
 
 async function learnLinear(){
   model = tf.sequential();
