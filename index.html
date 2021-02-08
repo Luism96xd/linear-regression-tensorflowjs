@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio de Regresión Lineal</title>
+    <link rel="stylesheet" href="regresion.css">
+    <!-- Importar la ultima versión de tensorflow-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+
+    <!-- Importar tfjs-vis para visualizar gráficas y resumenes del modelo-->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.0.2/dist/tfjs-vis.umd.min.js"></script>
+</head>
+<body>
+    <div id="alerts">
+    </div>
+    <!--Creamos un formulario para subir el archivo de los datos-->
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="files">Upload a CSV formatted file:</label>
+            <input type="file" id="files" class="form-control" accept=".csv" required />
+        </div>
+    
+        <div class="form-group">
+            <button type="button" id="run_button" class="btn btn-primary">Entrenar</button>
+            <p>Predice un valor:</p>
+            <div class="row">
+                <input type="text" name="prediction" id="predict">
+                <button type="button" id="predict_btn">Predecir</button>
+            </div>
+        </div>
+    </form>
+    <div id="container">
+        <div id="output_field"><b>Predicción:</b></div>
+    </div>
+    <script src="example.js"></script>
+</body>
+</html>
